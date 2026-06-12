@@ -1,0 +1,203 @@
+/* ============================================================
+   DESIGN TOKENS
+   All colors, type sizes, and spacing live here for easy edits.
+   ============================================================ */
+:root {
+  /* — Color (light mode) — */
+  --color-bg:        #fffefc;  /* warm off-white */
+  --color-text:      #1A1A1A;  /* near-black */
+  --color-muted:     #6B6258;  /* warm gray for secondary text */
+  --color-accent:    #44607A;  /* deep muted slate-blue, for links */
+  --color-accent-hover: #2E4254;
+  --color-rule:      #E2DCD2;  /* faint divider */
+  --color-photo-bg:  #DAD3C7;  /* placeholder box fill */
+
+  /* — Typography — */
+  --font-serif: "EB Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: Arial, sans-serif;
+
+
+  --fs-name:    2.75rem;  /* the name at the top */
+  --fs-position: 1.35rem; /* positioning line */
+  --fs-section: 0.875rem; /* section labels (SELECT WORK, etc.) */
+  --fs-body:    1.2rem;   /* body copy */
+  --fs-small:   1.05rem;  /* contact, work list */
+
+  --lh-body:    1.78;     /* generous, book-like */
+  --lh-tight:   1.25;     /* headings */
+
+  /* — Layout — */
+  --measure:    680px;    /* max text column width */
+  --space-page-x: 2rem;   /* horizontal page padding */
+  --space-section: 3.5rem;/* vertical gap between sections */
+}
+
+/* — Dark mode: warm, Apple-Books-like night palette — */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg:        #1B1916;
+    --color-text:      #E8E2D8;
+    --color-muted:     #9C9388;
+    --color-accent:    #9DB3C7;
+    --color-accent-hover: #C2D2E0;
+    --color-rule:      #322E29;
+    --color-photo-bg:  #2A2723;
+  }
+}
+
+/* ============================================================
+   RESET / BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-serif);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ============================================================
+   LAYOUT — single narrow centered column, wide margins
+   ============================================================ */
+.page {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 6rem var(--space-page-x) 5rem;
+}
+
+section { margin-bottom: var(--space-section); }
+
+/* Section labels: small, spaced, quiet */
+.label {
+  font-size: var(--fs-section);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  font-weight: 500;
+  margin: 0 0 1rem;
+}
+
+/* ============================================================
+   HEADER — name + positioning line
+   ============================================================ */
+.masthead { margin-bottom: var(--space-section); }
+
+.name {
+  font-size: var(--fs-name);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.01em;
+  margin: 0 0 0.75rem;
+  font-family: var(--font-sans);
+}
+
+.positioning {
+  font-size: var(--fs-position);
+  font-style: italic;
+  color: var(--color-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ============================================================
+   BIO — photo + prose
+   ============================================================ */
+.bio p { margin: 0 0 1.25rem; }
+.bio p:last-child { margin-bottom: 0; }
+
+/* Small contained photo with a dithered/pixel treatment.
+   The placeholder is a gray box at the correct dimensions;
+   drop a real image into the <img> src to replace it. */
+.portrait {
+  width: 132px;
+  height: 132px;
+  float: left;
+  margin: 0.35rem 1.6rem 0.6rem 0;
+  background-color: var(--color-photo-bg);
+  object-fit: cover;
+  
+
+  /* Pixel / dither treatment: keeps small images crisp-blocky
+     rather than smoothly interpolated. Pairs with the
+     downscale trick if you export the photo at low res. */
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  filter: contrast(1.05) saturate(0.9);
+}
+
+/* Clear the float so following sections don't wrap the photo */
+.bio::after { content: ""; display: block; clear: both; }
+
+/* ============================================================
+   SELECT WORK — named list, no case studies
+   ============================================================ */
+.work-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.work-list li {
+  font-size: var(--fs-small);
+  padding: 0.9rem 0;
+  border-top: 1px solid var(--color-rule);
+}
+.work-list li:last-child { border-bottom: 1px solid var(--color-rule); }
+
+.work-title { font-weight: 600; }
+.work-note { color: var(--color-muted); }
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact p { margin: 0; font-size: var(--fs-small); }
+
+/* ============================================================
+   LINKS — single muted accent, subtle hover only
+   ============================================================ */
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.18s ease, color 0.18s ease;
+}
+a:hover {
+  color: var(--color-accent-hover);
+  border-bottom-color: var(--color-accent-hover);
+}
+a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* ============================================================
+   RESPONSIVE — clean single column down to 375px
+   ============================================================ */
+@media (max-width: 480px) {
+  :root {
+    --fs-name: 2.1rem;
+    --fs-position: 1.2rem;
+    --fs-body: 1.12rem;
+    --space-page-x: 1.4rem;
+    --space-section: 2.75rem;
+  }
+  .page { padding-top: 3.5rem; }
+  .portrait {
+    width: 104px;
+    height: 104px;
+    margin-right: 1.2rem;
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  a { transition: none; }
+}
