@@ -1,47 +1,53 @@
 /* ============================================================
    DESIGN TOKENS
-   All colors, type sizes, and spacing live here for easy edits.
+   Visual language borrowed from publicworks.nyc: system sans,
+   black on white, one gray for secondary text, hairline rules,
+   and the manila-folder tab as the only ornament.
    ============================================================ */
 :root {
   /* — Color (light mode) — */
-  --color-bg:        #fffefc;  /* warm off-white */
-  --color-text:      #1A1A1A;  /* near-black */
-  --color-muted:     #6B6258;  /* warm gray for secondary text */
-  --color-accent:    #44607A;  /* deep muted slate-blue, for links */
-  --color-accent-hover: #2E4254;
-  --color-rule:      #E2DCD2;  /* faint divider */
-  --color-photo-bg:  #DAD3C7;  /* placeholder box fill */
+  --color-bg:        #ffffff;  /* paper */
+  --color-text:      #000000;  /* ink */
+  --color-muted:     #6b6b6b;  /* quiet: secondary text, labels, captions */
+  --color-rule:      #dcdcdc;  /* hairline borders */
+  --color-tint:      #f4f4f1;  /* faint fill for framed elements */
+  --color-accent:    #0b41a0;  /* NYC blue — hover only, never decorative */
 
   /* — Typography — */
-  --font-serif: "EB Garamond", Georgia, "Times New Roman", serif;
-  --font-sans: Arial, sans-serif;
+  /* No webfont is loaded. Arial if present, else the platform's
+     grotesque. Deliberate: one less network request, and the plainness
+     is the point. */
+  --font-sans: Arial, Helvetica, sans-serif;
 
+  --fs-name:     2rem;      /* the name at the top */
+  --fs-position: 1.0625rem; /* positioning line */
+  --fs-section:  0.6875rem; /* section labels (CONTACT, etc.) — 11px */
+  --fs-body:     1rem;      /* body copy — 16px */
+  --fs-small:    0.875rem;  /* contact, work list — 14px */
 
-  --fs-name:    2.75rem;  /* the name at the top */
-  --fs-position: 1.35rem; /* positioning line */
-  --fs-section: 0.875rem; /* section labels (SELECT WORK, etc.) */
-  --fs-body:    1.2rem;   /* body copy */
-  --fs-small:   1.05rem;  /* contact, work list */
-
-  --lh-body:    1.78;     /* generous, book-like */
-  --lh-tight:   1.25;     /* headings */
+  --lh-body:    1.55;   /* publicworks runs 1.45 for dense UI lists;
+                           prose wants a little more air */
+  --lh-tight:   1.2;    /* headings */
 
   /* — Layout — */
-  --measure:    680px;    /* max text column width */
-  --space-page-x: 2rem;   /* horizontal page padding */
-  --space-section: 3.5rem;/* vertical gap between sections */
+  --measure:    600px;  /* max text column. Narrower than the old serif
+                           setting on purpose: Arial at 16px sets far more
+                           characters per line than EB Garamond did, so the
+                           column has to come in to keep the measure sane. */
+  --space-page-x: 2rem;
+  --space-section: 3rem;
 }
 
-/* — Dark mode: warm, Apple-Books-like night palette — */
+/* — Dark mode: neutral, not warm — publicworks itself is light-only,
+     so this is a straight tonal inversion of the same palette. — */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg:        #1B1916;
-    --color-text:      #E8E2D8;
-    --color-muted:     #9C9388;
-    --color-accent:    #9DB3C7;
-    --color-accent-hover: #C2D2E0;
-    --color-rule:      #322E29;
-    --color-photo-bg:  #2A2723;
+    --color-bg:     #121212;
+    --color-text:   #f0f0f0;
+    --color-muted:  #9a9a9a;
+    --color-rule:   #333333;
+    --color-tint:   #1c1c1c;
+    --color-accent: #7fa5e8;
   }
 }
 
@@ -56,11 +62,10 @@ body {
   margin: 0;
   background-color: var(--color-bg);
   color: var(--color-text);
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: var(--fs-body);
   line-height: var(--lh-body);
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
 }
 
 /* ============================================================
@@ -69,19 +74,28 @@ body {
 .page {
   max-width: var(--measure);
   margin: 0 auto;
-  padding: 6rem var(--space-page-x) 5rem;
+  padding: 5rem var(--space-page-x) 4rem;
 }
 
 section { margin-bottom: var(--space-section); }
+section:last-child { margin-bottom: 0; }
 
-/* Section labels: small, spaced, quiet */
+/* Section labels: the folder tab from publicworks.nyc. Border on three
+   sides with the left open and the right corners rounded, so it reads as
+   a tab hanging off the spine of a file rather than a boxed heading.
+   This is the one piece of ornament on the page. */
 .label {
+  display: inline-block;
   font-size: var(--fs-section);
-  letter-spacing: 0.14em;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--color-muted);
-  font-weight: 500;
-  margin: 0 0 1rem;
+  font-weight: 400;
+  margin: 0 0 0.85rem;
+  padding: 6px 10px 5px;
+  border: 1px solid var(--color-rule);
+  border-left: 0;
+  border-radius: 0 3px 3px 0;
 }
 
 /* ============================================================
@@ -91,45 +105,35 @@ section { margin-bottom: var(--space-section); }
 
 .name {
   font-size: var(--fs-name);
-  font-weight: 600;
+  font-weight: 700;
   line-height: var(--lh-tight);
   letter-spacing: -0.01em;
-  margin: 0 0 0.75rem;
-  font-family: var(--font-sans);
+  margin: 0 0 0.5rem;
 }
 
 .positioning {
   font-size: var(--fs-position);
-  font-style: italic;
   color: var(--color-muted);
-  line-height: 1.5;
+  line-height: 1.45;
   margin: 0;
 }
 
 /* ============================================================
    BIO — photo + prose
    ============================================================ */
-.bio p { margin: 0 0 1.25rem; }
+.bio p { margin: 0 0 1.1rem; }
 .bio p:last-child { margin-bottom: 0; }
 
-/* Small contained photo with a dithered/pixel treatment.
-   The placeholder is a gray box at the correct dimensions;
-   drop a real image into the <img> src to replace it. */
+/* Framed like the image slot on publicworks.nyc: a hairline rule and a
+   faint tint behind it, no filter treatment. */
 .portrait {
   width: 132px;
   height: 132px;
   float: left;
-  margin: 0.35rem 1.6rem 0.6rem 0;
-  background-color: var(--color-photo-bg);
+  margin: 0.3rem 1.5rem 0.6rem 0;
+  background-color: var(--color-tint);
+  border: 1px solid var(--color-rule);
   object-fit: cover;
-  
-
-  /* Pixel / dither treatment: keeps small images crisp-blocky
-     rather than smoothly interpolated. Pairs with the
-     downscale trick if you export the photo at low res. */
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
-  filter: contrast(1.05) saturate(0.9);
 }
 
 /* Clear the float so following sections don't wrap the photo */
@@ -146,12 +150,12 @@ section { margin-bottom: var(--space-section); }
 
 .work-list li {
   font-size: var(--fs-small);
-  padding: 0.9rem 0;
+  padding: 0.75rem 0;
   border-top: 1px solid var(--color-rule);
 }
 .work-list li:last-child { border-bottom: 1px solid var(--color-rule); }
 
-.work-title { font-weight: 600; }
+.work-title { font-weight: 700; }
 .work-note { color: var(--color-muted); }
 
 /* ============================================================
@@ -160,18 +164,16 @@ section { margin-bottom: var(--space-section); }
 .contact p { margin: 0; font-size: var(--fs-small); }
 
 /* ============================================================
-   LINKS — single muted accent, subtle hover only
+   LINKS — black and underlined, color only on hover
    ============================================================ */
 a {
-  color: var(--color-accent);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.18s ease, color 0.18s ease;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  transition: color 0.15s ease;
 }
-a:hover {
-  color: var(--color-accent-hover);
-  border-bottom-color: var(--color-accent-hover);
-}
+a:hover { color: var(--color-accent); }
 a:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 3px;
@@ -183,13 +185,12 @@ a:focus-visible {
    ============================================================ */
 @media (max-width: 480px) {
   :root {
-    --fs-name: 2.1rem;
-    --fs-position: 1.2rem;
-    --fs-body: 1.12rem;
+    --fs-name: 1.6rem;
+    --fs-position: 1rem;
     --space-page-x: 1.4rem;
-    --space-section: 2.75rem;
+    --space-section: 2.5rem;
   }
-  .page { padding-top: 3.5rem; }
+  .page { padding-top: 3rem; }
   .portrait {
     width: 104px;
     height: 104px;
