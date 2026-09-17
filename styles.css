@@ -14,10 +14,9 @@
   --color-accent:    #0b41a0;  /* NYC blue — hover only, never decorative */
 
   /* — Typography — */
-  /* No webfont is loaded. Arial if present, else the platform's
-     grotesque. Deliberate: one less network request, and the plainness
-     is the point. */
-  --font-sans: Arial, Helvetica, sans-serif;
+  /* Helvetica Neue where the system has it (macOS/iOS), plain Helvetica
+     or Arial elsewhere. No webfont loaded — one less network request. */
+  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
   --fs-name:     2rem;      /* the name at the top */
   --fs-position: 1.0625rem; /* positioning line */
@@ -25,8 +24,7 @@
   --fs-body:     1rem;      /* body copy — 16px */
   --fs-small:    0.875rem;  /* contact, work list — 14px */
 
-  --lh-body:    1.55;   /* publicworks runs 1.45 for dense UI lists;
-                           prose wants a little more air */
+  --lh-body:    1.65;   /* airy, generous line height for prose */
   --lh-tight:   1.2;    /* headings */
 
   /* — Layout — */
@@ -35,7 +33,7 @@
                            characters per line than EB Garamond did, so the
                            column has to come in to keep the measure sane. */
   --space-page-x: 2rem;
-  --space-section: 3rem;
+  --space-section: 4rem;
 }
 
 /* — Dark mode: neutral, not warm — publicworks itself is light-only,
@@ -74,28 +72,23 @@ body {
 .page {
   max-width: var(--measure);
   margin: 0 auto;
-  padding: 5rem var(--space-page-x) 4rem;
+  padding: 7rem var(--space-page-x) 6rem;
 }
 
 section { margin-bottom: var(--space-section); }
 section:last-child { margin-bottom: 0; }
 
-/* Section labels: the folder tab from publicworks.nyc. Border on three
-   sides with the left open and the right corners rounded, so it reads as
-   a tab hanging off the spine of a file rather than a boxed heading.
-   This is the one piece of ornament on the page. */
+/* Section labels: plain, wide-tracked, no box. A quiet category marker
+   rather than a UI chrome element — the boxed "folder tab" read as
+   civic-dossier; this reads closer to a product-page field label. */
 .label {
-  display: inline-block;
+  display: block;
   font-size: var(--fs-section);
-  letter-spacing: 0.09em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--color-muted);
-  font-weight: 400;
-  margin: 0 0 0.85rem;
-  padding: 6px 10px 5px;
-  border: 1px solid var(--color-rule);
-  border-left: 0;
-  border-radius: 0 3px 3px 0;
+  font-weight: 500;
+  margin: 0 0 1.1rem;
 }
 
 /* ============================================================
@@ -105,7 +98,7 @@ section:last-child { margin-bottom: 0; }
 
 .name {
   font-size: var(--fs-name);
-  font-weight: 700;
+  font-weight: 500;
   line-height: var(--lh-tight);
   letter-spacing: -0.01em;
   margin: 0 0 0.5rem;
